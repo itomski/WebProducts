@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h1>Produkte</h1>
+
+                <!-- table>thead>tr>th*5 -->
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Im Sortiment seit</th>
+                            <th>Anzahl</th>
+                            <th>Preis</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="p : ${products}">
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${p.createdAt}"></td>
+                        <td th:text="${p.quantity}"></td>
+                        <td th:text="${p.price}"></td>
+                        <td th:text="${p.status}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
