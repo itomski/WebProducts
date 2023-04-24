@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-</head>
+
+<head th:replace="fragments.html :: head('Produktliste')"></head>
+
 <body>
+
+    <nav th:replace="fragments.html :: mainNav"></nav>
 
     <div class="container">
         <div class="row">
             <div class="col">
 
                 <h1>Produkte</h1>
-
-                <!-- table>thead>tr>th*5 -->
 
                 <table class="table table-striped">
                     <thead>
@@ -23,6 +21,7 @@
                             <th>Anzahl</th>
                             <th>Preis</th>
                             <th>Status</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
 
@@ -33,6 +32,10 @@
                         <td th:text="${p.quantity}"></td>
                         <td th:text="${p.price}"></td>
                         <td th:text="${p.status}"></td>
+                        <td>
+                            <a th:href="@{/edit/{id}(id=${p.id})}" class="btn btn-warning">EDIT</a>
+                            <a th:href="@{/delete/{id}(id=${p.id})}" class="btn btn-danger">DELETE</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -41,9 +44,6 @@
         </div>
     </div>
 
-
-
-
-
+    <th:block th:replace="fragments.html :: foot"></th:block>
 </body>
 </html>

@@ -1,8 +1,10 @@
 package de.lubowiecki.webproducts.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -13,14 +15,19 @@ public class Product {
     @GeneratedValue
     private int id;
 
+    //@NotEmpty(message = "Darf nicht leeeeeeer sein!")
+    @NotEmpty
     private String name;
 
     private LocalDate createdAt;
 
+    @PositiveOrZero
     private int quantity;
 
+    @Positive
     private double price;
 
+    @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_AVAILABLE;
 
     public int getId() {

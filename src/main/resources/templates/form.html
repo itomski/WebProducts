@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://thymeleaf.org">
+
+<head th:replace="fragments.html :: head('Neues Produkt')"></head>
+
+<body>
+  <!--
+  header
+  nav
+  main
+  aside
+  footer
+  -->
+
+  <nav th:replace="fragments.html :: mainNav"></nav>
+
+  <main class="container">
+    <div class="row">
+      <div class="col-md-8 col-lg-6">
+
+        <h1>Produkt</h1>
+
+        <form action="/save" method="post" th:object="${product}">
+
+          <input type="hidden" th:field="*{id}">
+
+          <input type="hidden" th:field="*{createdAt}">
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" th:field="*{name}" class="form-control">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Anzahl</label>
+            <input type="text" th:field="*{quantity}" class="form-control">
+            <div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Preis</label>
+            <input type="text" th:field="*{price}" class="form-control">
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select th:field="*{status}" class="form-select">
+              <option value="AVAILABLE">verfügbar</option>
+              <option value="NOT_AVAILABLE">nicht verfügbar</option>
+              <option value="BLOCKED">gesperrt</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-success">Speichern</button>
+
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <th:block th:replace="fragments.html :: foot"></th:block>
+</body>
+</html>
