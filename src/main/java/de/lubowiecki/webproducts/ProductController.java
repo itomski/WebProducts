@@ -21,12 +21,15 @@ public class ProductController {
 
     @Autowired
     private ProductRepository repository;
+    @Autowired
+    private LoginService loginService;
 
     // HTTP: GET @GetMapping, POST @PostMapping, PUT @PutMapping, DELETE @DeleteMapping
     // @RequestMapping: erlaubt alle Request-Methoden
 
     @GetMapping("/")
     public String index(Model uiModel) {
+        if(!loginService.isLoggedIn()) return "redirect:/login";
         uiModel.addAttribute("products", repository.findAll()); // Macht die List für das Template verfügbar
         uiModel.addAttribute("active", "list");
         return "basic"; // verwendet basic.html aus resources/templates
@@ -34,6 +37,7 @@ public class ProductController {
 
     @GetMapping("/new")
     public String newForm(Model uiModel) {
+        if(!loginService.isLoggedIn()) return "redirect:/login";
         uiModel.addAttribute("active", "new");
         uiModel.addAttribute("product", new Product());
         return "form";
@@ -42,7 +46,7 @@ public class ProductController {
     @PostMapping("/save")
     public String save(@Valid Product product, BindingResult result, Model uiModel) {
 
-        System.out.println(result);
+        if(!loginService.isLoggedIn()) return "redirect:/login";
 
         if(result.hasErrors()) {
             return "form";
@@ -57,12 +61,17 @@ public class ProductController {
 
     @GetMapping("/settings")
     public String settings(Model uiModel) {
+
+        if(!loginService.isLoggedIn()) return "redirect:/login";
+
         uiModel.addAttribute("active", "settings");
         return "settings";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id, Model uiModel) {
+
+        if(!loginService.isLoggedIn()) return "redirect:/login";
         Optional<Product> opt = repository.findById(id);
         if(opt.isPresent()) {
             repository.delete(opt.get());
@@ -72,6 +81,9 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable int id, Model uiModel) {
+
+        if(!loginService.isLoggedIn()) return "redirect:/login";
+
         Optional<Product> opt = repository.findById(id);
         if(opt.isPresent()) {
             uiModel.addAttribute("product", opt.get());

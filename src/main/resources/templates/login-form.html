@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://thymeleaf.org">
+
+    <head th:replace="fragments.html :: head('Login')"></head>
+    <body>
+
+    <nav th:replace="fragments.html :: mainNav"></nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+
+                <h1>Login</h1>
+
+                <div th:if="${err}" class="alert alert-danger" role="alert">
+                    Falsche Anmeldedaten!
+                </div>
+
+                <form action="/login" method="post">
+                    <input type="text" class="form-control mb-3" name="email" placeholder="E-Mail">
+                    <input type="password" class="form-control mb-3" name="password" placeholder="Passwort">
+                    <button type="submit" class="btn btn-success">Einloggen</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="fragments.html :: foot"></th:block>
+
+    </body>
+</html>

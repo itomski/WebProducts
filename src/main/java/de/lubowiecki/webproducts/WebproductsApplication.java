@@ -2,6 +2,8 @@ package de.lubowiecki.webproducts;
 
 import de.lubowiecki.webproducts.model.Product;
 import de.lubowiecki.webproducts.model.ProductRepository;
+import de.lubowiecki.webproducts.model.User;
+import de.lubowiecki.webproducts.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +18,10 @@ import java.util.List;
 public class WebproductsApplication implements CommandLineRunner {
 
 	@Autowired
-	private ProductRepository repository;
+	private ProductRepository productRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Value("${db.reset}")
 	private boolean dbReset; // Wert wird aus der application.properties gelesen
@@ -29,7 +34,7 @@ public class WebproductsApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception { // Wir 1x beim Start der Anwendung ausgeführt
 
 		if(dbReset) {
-			repository.deleteAll(); // Löscht alte Daten
+			productRepository.deleteAll(); // Löscht alte Daten
 
 			List<Product> products = new ArrayList<>();
 
@@ -48,7 +53,15 @@ public class WebproductsApplication implements CommandLineRunner {
 			p.setCreatedAt(LocalDate.now());
 			products.add(p);
 
-			repository.saveAll(products);
+			productRepository.saveAll(products);
+
+			userRepository.deleteAll();
+
+			User user = new User();
+			user.setEmail("peter@parker.de");
+			user.setPassword("geheim#123");
+
+			userRepository.save(user);
 		}
 	}
 }
